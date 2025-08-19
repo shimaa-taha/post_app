@@ -20,7 +20,7 @@ object ApiClient {
         .addConverterFactory(GsonConverterFactory.create())
         .build()
 
-    val apiService: ApiService by lazy {
-        retrofit.create(ApiService::class.java)
+    val apiService: PostApiService by lazy {
+        retrofit.create(PostApiService::class.java)
     }
 }
