@@ -1,4 +1,4 @@
-package com.example.post_app.ui.createpost
+package com.example.post_app.ui.createpost.model
 
 data class Post(
     val id: String,

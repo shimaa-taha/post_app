@@ -3,22 +3,36 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-    android:padding="20dp">
+    android:padding="24dp"
+    android:background="@drawable/dialog_background">
 
-    <!-- Circular Image Container -->
+    <!-- Header -->
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Create New Post"
+        android:textAppearance="@style/TextAppearance.Material3.TitleLarge"
+        android:textAlignment="center"
+        android:layout_marginBottom="20dp"
+        android:textColor="?attr/colorOnSurface"/>
+
+    <!-- Circular Image Container with improved design -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
+        android:orientation="vertical"
         android:gravity="center"
-        android:layout_marginBottom="16dp">
+        android:layout_marginBottom="24dp">
 
-        <androidx.cardview.widget.CardView
-            android:layout_width="100dp"
-            android:layout_height="100dp"
-            app:cardCornerRadius="50dp"
-            app:cardElevation="4dp"
-            android:foreground="?attr/selectableItemBackgroundBorderless">
+        <com.google.android.material.card.MaterialCardView
+            android:layout_width="120dp"
+            android:layout_height="120dp"
+            app:cardCornerRadius="60dp"
+            app:cardElevation="6dp"
+            app:strokeColor="?attr/colorOutline"
+            app:strokeWidth="1dp"
+            app:rippleColor="?attr/colorPrimaryContainer"
+            style="@style/Widget.Material3.CardView.Outlined">
 
             <FrameLayout
                 android:layout_width="match_parent"
@@ -30,112 +44,144 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:scaleType="centerCrop"
-                    android:visibility="gone"/>
+                    android:visibility="gone"
+                    android:contentDescription="Selected image"
+                    app:shapeAppearanceOverlay="@style/ShapeAppearance.Material3.LargeComponent"/>
 
-                <!-- Default Camera Icon (shown when no image selected) -->
+                <!-- Default Camera Icon -->
                 <LinearLayout
                     android:id="@+id/defaultCameraLayout"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:orientation="vertical"
                     android:gravity="center"
-                    android:background="?attr/colorPrimary"
+                    android:background="?attr/colorSecondaryContainer"
                     android:clickable="true"
-                    android:focusable="true">
+                    android:focusable="true"
+                    android:foreground="?attr/selectableItemBackground">
 
-                    <ImageView
-                        android:layout_width="32dp"
-                        android:layout_height="32dp"
-                        android:src="@android:drawable/ic_menu_camera"
-                        android:tint="@android:color/white"/>
+                    <com.google.android.material.imageview.ShapeableImageView
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:src="@drawable/ic_add_photo_24"
+                        android:tint="?attr/colorOnSecondaryContainer"
+
+                        android:scaleType="centerInside"/>
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Add Photo"
-                        android:textColor="@android:color/white"
-                        android:textSize="10sp"
-                        android:layout_marginTop="4dp"/>
+                        android:textAppearance="@style/TextAppearance.Material3.LabelSmall"
+                        android:textColor="?attr/colorOnSecondaryContainer"
+                        android:layout_marginTop="8dp"/>
                 </LinearLayout>
             </FrameLayout>
-        </androidx.cardview.widget.CardView>
+        </com.google.android.material.card.MaterialCardView>
+
+        <!-- Image status text -->
+        <TextView
+            android:id="@+id/tvSelectedImageName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="No image selected"
+            android:textAppearance="@style/TextAppearance.Material3.BodySmall"
+            android:textColor="?attr/colorOnSurfaceVariant"
+            android:layout_marginTop="12dp"
+            android:maxLines="1"
+            android:ellipsize="end"/>
     </LinearLayout>
 
-    <!-- Rest of your layout remains the same -->
-    <LinearLayout
+    <!-- Title Field -->
+    <com.google.android.material.textfield.TextInputLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_marginBottom="4dp">
+        android:layout_marginBottom="16dp"
+        app:boxBackgroundMode="outline"
+        app:shapeAppearance="?attr/shapeAppearanceSmallComponent"
+        app:placeholderText="Enter post title"
+        app:placeholderTextColor="?attr/colorOnSurfaceVariant"
+        style="@style/Widget.Material3.TextInputLayout.OutlinedBox">
 
-        <TextView
-            android:layout_width="wrap_content"
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/etTitle"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Title"
-            android:textStyle="bold"
-            android:textSize="14sp"/>
+            android:inputType="textCapSentences"
+            android:maxLines="1"
+            android:textAppearance="@style/TextAppearance.Material3.BodyLarge"/>
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="*"
-            android:textColor="@android:color/holo_red_dark"
-            android:textSize="14sp"
-            android:layout_marginStart="2dp"/>
-    </LinearLayout>
+    </com.google.android.material.textfield.TextInputLayout>
 
-    <EditText
-        android:id="@+id/etTitle"
+    <!-- Content Field -->
+    <com.google.android.material.textfield.TextInputLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Enter post title"
-        android:inputType="textCapSentences"
-        android:background="@drawable/edittext_background"
-        android:padding="12dp"/>
+        android:layout_marginBottom="8dp"
+        app:boxBackgroundMode="outline"
+        app:shapeAppearance="?attr/shapeAppearanceSmallComponent"
+        app:placeholderText="Share your thoughts..."
+        app:placeholderTextColor="?attr/colorOnSurfaceVariant"
+        style="@style/Widget.Material3.TextInputLayout.OutlinedBox">
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_marginTop="16dp"
-        android:layout_marginBottom="4dp">
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/etContent"
+            android:layout_width="match_parent"
+            android:layout_height="120dp"
+            android:inputType="textMultiLine|textCapSentences"
+            android:gravity="top"
+            android:maxLines="6"
+            android:textAppearance="@style/TextAppearance.Material3.BodyLarge"/>
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Content"
-            android:textStyle="bold"
-            android:textSize="14sp"/>
+    </com.google.android.material.textfield.TextInputLayout>
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="*"
-            android:textColor="@android:color/holo_red_dark"
-            android:textSize="14sp"
-            android:layout_marginStart="2dp"/>
-    </LinearLayout>
-
-    <EditText
-        android:id="@+id/etContent"
-        android:layout_width="match_parent"
-        android:layout_height="120dp"
-        android:hint="Enter post content"
-        android:inputType="textMultiLine"
-        android:gravity="top"
-        android:background="@drawable/edittext_background"
-        android:padding="12dp"/>
-
+    <!-- Character counter for content -->
     <TextView
-        android:id="@+id/tvSelectedImageName"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="No image selected"
-        android:textSize="12sp"
-        android:textColor="?android:attr/textColorSecondary"
-        android:layout_marginTop="8dp"
-        android:maxLines="1"
-        android:ellipsize="end"
-        android:gravity="center"/>
+        android:text="0/500"
+        android:textAppearance="@style/TextAppearance.Material3.BodySmall"
+        android:textColor="?attr/colorOnSurfaceVariant"
+        android:gravity="end"
+        android:layout_marginBottom="16dp"/>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center"
+        android:padding="16dp"
+       >
+
+        <!-- Cancel Button -->
+        <com.google.android.material.button.MaterialButton
+            android:layout_width="wrap_content"
+            android:layout_height="48dp"
+            android:id="@+id/cancel_btn"
+
+            android:text="Cancel"
+            android:textColor="@android:color/white"
+            android:backgroundTint="@color/teal_200"
+            app:cornerRadius="8dp"
+            android:minWidth="96dp"
+            android:layout_marginEnd="8dp"
+            app:strokeColor="@android:color/white"
+            app:strokeWidth="1dp"/>
+
+        <!-- Create Button -->
+        <com.google.android.material.button.MaterialButton
+            android:layout_width="wrap_content"
+            android:layout_height="48dp"
+            android:id="@+id/create_btn"
+            android:text="Create"
+            android:textColor="@android:color/white"
+            android:backgroundTint="@color/teal_700"
+            app:cornerRadius="8dp"
+            android:minWidth="96dp"
+            app:iconGravity="textEnd"
+            app:iconPadding="4dp"
+            app:iconTint="@android:color/white"
+            />
+
+    </LinearLayout>
 
 </LinearLayout>

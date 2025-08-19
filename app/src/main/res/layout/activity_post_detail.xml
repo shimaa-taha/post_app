@@ -43,15 +43,20 @@
             <Button
                 android:id="@+id/btnEdit"
                 android:layout_width="0dp"
+                android:background="@color/teal_700"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="Edit"/>
+                android:layout_marginEnd="10dp"
+
+                android:text="Edit" />
 
             <Button
                 android:id="@+id/btnDelete"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+              android:background="@color/teal_700"
+                android:layout_marginEnd="10dp"
                 android:text="Delete"/>
         </LinearLayout>
 

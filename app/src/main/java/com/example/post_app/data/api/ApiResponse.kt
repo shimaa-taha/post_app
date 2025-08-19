@@ -1,6 +1,6 @@
 package com.example.post_app.data.api
 
-import com.example.post_app.ui.createpost.Post
+import com.example.post_app.ui.createpost.model.Post
 
 private fun PostResponse.toPost(): Post {
     return Post(

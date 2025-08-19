@@ -1,19 +1,14 @@
 package com.example.post_app.data.model
-
 import android.app.Application
 import android.net.Uri
-import androidx.core.net.toFile
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.post_app.data.api.ApiResult
 import com.example.post_app.data.api.repository.PostRepository
-import com.example.post_app.ui.createpost.Post
-import kotlinx.coroutines.Dispatchers
+import com.example.post_app.ui.createpost.model.Post
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 class PostViewModel(application: Application) : AndroidViewModel(application) {
     private val repository = PostRepository(application.applicationContext)
 
@@ -79,24 +74,7 @@ class PostViewModel(application: Application) : AndroidViewModel(application) {
             }
         }
     }
-    // In PostViewModel.kt
-//    fun createPost(title: String, content: String, imageUrl: String? = null) {
-//        viewModelScope.launch {
-//            _isLoading.value = true
-//            _error.value = null
-//            when (val result = repository.createPost(title, content, imageUrl)) {
-//                is ApiResult.Success -> {
-//                    Log.d("create post","done")
-//                    // Reload posts after successful creation
-//                    loadPosts()
-//                    // Show success message
-//                    _error.value = "Post created successfully!"
-//                }
-//                is ApiResult.Error -> _error.value = result.exception.message
-//            }
-//            _isLoading.value = false
-//        }
-//    }
+
 
     fun deletePost(postId: Int) {
         viewModelScope.launch {

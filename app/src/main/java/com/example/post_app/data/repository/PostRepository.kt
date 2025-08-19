@@ -4,7 +4,7 @@ import android.net.Uri
 import com.example.post_app.data.api.ApiResult
 import com.example.post_app.data.api.PostResponse
 import com.example.post_app.data.api.RetrofitInstance
-import com.example.post_app.ui.createpost.Post
+import com.example.post_app.ui.createpost.model.Post
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
 import okhttp3.RequestBody.Companion.asRequestBody
@@ -38,22 +38,20 @@ class  PostRepository(private val context: Context) {
         return try {
             val response = apiService.getPostById(id)
             if (response.isSuccessful) {
-                ApiResult.Success(response.body()!!.toPost()) // Use your custom Success
+                ApiResult.Success(response.body()!!.toPost())
             } else {
-                ApiResult.Error(Exception("Post not found: ${response.code()}")) // Use your custom Error
+                ApiResult.Error(Exception("Post not found: ${response.code()}"))
             }
         } catch (e: Exception) {
-            ApiResult.Error(e) // Use your custom Error
+            ApiResult.Error(e)
         }
     }
 
     suspend fun createPost(title: String, content: String, imageUri: Uri, fileName: String): ApiResult<Post> {
         return try {
-            // Convert text fields to RequestBody
             val titleBody = title.toRequestBody("text/plain".toMediaTypeOrNull())
             val contentBody = content.toRequestBody("text/plain".toMediaTypeOrNull())
 
-            // Convert Uri to File and create Multipart part
             val inputStream = context.contentResolver.openInputStream(imageUri)
             val file = File.createTempFile("upload", ".jpg", context.cacheDir)
 
@@ -75,7 +73,6 @@ class  PostRepository(private val context: Context) {
             if (response.isSuccessful) {
                 ApiResult.Success(response.body()!!.toPost())
             } else {
-                // Get error message from response
                 val errorBody = response.errorBody()?.string() ?: "Unknown error"
                 ApiResult.Error(Exception("Failed to create post: ${response.code()} - $errorBody"))
             }
@@ -86,12 +83,12 @@ class  PostRepository(private val context: Context) {
         return try {
             val response = apiService.deletePost(id)
             if (response.isSuccessful) {
-                ApiResult.Success(Unit) // Use your custom Success
+                ApiResult.Success(Unit)
             } else {
-                ApiResult.Error(Exception("Failed to delete post: ${response.code()}")) // Use your custom Error
+                ApiResult.Error(Exception("Failed to delete post: ${response.code()}"))
             }
         } catch (e: Exception) {
-            ApiResult.Error(e) // Use your custom Error
+            ApiResult.Error(e)
         }
     }
 

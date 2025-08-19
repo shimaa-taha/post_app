@@ -5,7 +5,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.post_app.databinding.PostItemBinding
-import com.example.post_app.ui.createpost.Post
+import com.example.post_app.ui.createpost.model.Post
 
 class PostAdapter(private val onItemClick: (Post) -> Unit) :
     RecyclerView.Adapter<PostAdapter.PostViewHolder>() {
@@ -26,7 +26,7 @@ class PostAdapter(private val onItemClick: (Post) -> Unit) :
         val post = posts[position]
         holder.bind(post)
         holder.itemView.setOnClickListener {
-            onItemClick(post) // Pass the post object instead of just ID
+            onItemClick(post)
         }
     }
 
@@ -40,7 +40,6 @@ class PostAdapter(private val onItemClick: (Post) -> Unit) :
             binding.tvContent.text = post.content
             binding.tvCreatedAt.text = post.created_at
 
-            // Load circular image
             Glide.with(binding.root.context)
                 .load(post.photo)
                 .placeholder(android.R.drawable.ic_menu_gallery)
