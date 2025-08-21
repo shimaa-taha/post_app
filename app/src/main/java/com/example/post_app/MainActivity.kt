@@ -7,6 +7,8 @@ import android.os.Bundle
 import android.provider.OpenableColumns
 import android.view.View
 import android.Manifest
+import android.os.Build
+import android.util.Log
 import android.widget.EditText
 import android.widget.ImageView
 import android.widget.LinearLayout
@@ -110,14 +112,38 @@ private var selectedImageUri: Uri? = null
         dialog.show()
     }
     private fun openGallery() {
-        if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE)
-            != PackageManager.PERMISSION_GRANTED) {
+        Log.d("openGallery", "shimaaaa")
+
+        val permissionsNeeded = mutableListOf<String>()
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            // Android 13+
+            if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_MEDIA_IMAGES)
+                != PackageManager.PERMISSION_GRANTED) {
+                permissionsNeeded.add(Manifest.permission.READ_MEDIA_IMAGES)
+            }
+        } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+            // Android 10-12 - READ_EXTERNAL_STORAGE is still needed but limited
+            if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE)
+                != PackageManager.PERMISSION_GRANTED) {
+                permissionsNeeded.add(Manifest.permission.READ_EXTERNAL_STORAGE)
+            }
+        } else {
+            // Android 9 and below
+            if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE)
+                != PackageManager.PERMISSION_GRANTED) {
+                permissionsNeeded.add(Manifest.permission.READ_EXTERNAL_STORAGE)
+            }
+        }
+
+        if (permissionsNeeded.isNotEmpty()) {
             ActivityCompat.requestPermissions(
                 this,
-                arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE),
+                permissionsNeeded.toTypedArray(),
                 PERMISSION_REQUEST_CODE
             )
         } else {
+            Log.d("openGallery", "shimaaaa22")
             launchGallery()
         }
     }
